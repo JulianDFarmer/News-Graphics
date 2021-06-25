@@ -38,13 +38,13 @@ function liveOn(locator=false) {
 
     // Reset the bug/locator back to below the viewable area
     // (it'll be above if it's previously been animated off)
-    $("#canvas-locator-live").css({top: "1.9vw"});
-    $("#canvas-locator-location").css({top: "1.9vw"});
-    $("#canvas-locator-tail").css({top: "3.73vw"});
+    $("#screen-live-bug").css({top: "1.9vw"});
+    $("#screen-live-locator").css({top: "1.9vw"});
+    $("#screen-live-locatortail").css({top: "3.73vw"});
 
     // Animate the live bug up into the viewable area...
     anime({
-        targets: '#canvas-locator-live',
+        targets: '#screen-live-bug',
         top: "0",
         easing: 'easeInOutQuad',
         duration: 300
@@ -52,13 +52,13 @@ function liveOn(locator=false) {
     // ... and if the user wants the locator, bring that up too.
     if(locator) {
         anime({
-            targets: '#canvas-locator-location',
+            targets: '#screen-live-locator',
             top: "0",
             easing: 'easeInOutQuad',
             duration: 300
         });
         anime({
-            targets: '#canvas-locator-tail',
+            targets: '#screen-live-locatortail',
             top: "1.83vw",
             easing: 'easeInOutQuad',
             duration: 300
@@ -79,7 +79,7 @@ function liveOff() {
 
     // Animate the live bug up out of the viewable area...
     anime({
-        targets: '#canvas-locator-live',
+        targets: '#screen-live-bug',
         top: "-1.9vw",
         easing: 'easeInOutQuad',
         duration: 300
@@ -87,13 +87,13 @@ function liveOff() {
     // ... and if the locator is on as well, animate that off too.
     if(isLiveLocatorOn) {
         anime({
-            targets: '#canvas-locator-location',
+            targets: '#screen-live-locator',
             top: "-1.9vw",
             easing: 'easeInOutQuad',
             duration: 300
         });
         anime({
-            targets: '#canvas-locator-tail',
+            targets: '#screen-live-locatortail',
             top: "-0.07vw",
             easing: 'easeInOutQuad',
             duration: 300
@@ -113,11 +113,11 @@ function astonHeadOn() {
     }
 
     // Lower the sub headline out of the viewable area so that we can animate it on later.
-    $("#canvas-aston-subhead").css({top: "6.5vw"});
+    $("#screen-lowerthirds-heads-subhead").css({top: "6.5vw"});
 
     // Raise the entire Aston container upwards into vision, and grow it simultaneously.
     anime({
-        targets: '#canvas-aston',
+        targets: '#screen-lowerthirds-container',
         top: "32.1vw",
         height: "6.8vw",
         easing: 'easeInOutQuad',
@@ -126,7 +126,7 @@ function astonHeadOn() {
 
     // Animate the sub headline upwards as the Aston container comes into view.
     anime({
-        targets: '#canvas-aston-subhead',
+        targets: '#screen-lowerthirds-heads-subhead',
         top: "4.33vw",
         easing: 'easeInOutQuad',
         delay: 200,
@@ -147,7 +147,7 @@ function astonHeadOff() {
     // Animate the entire headline Aston container downwards, and shrink it.
     // Once we're done, only the top bit showing the logo will in vision.
     anime({
-        targets: '#canvas-aston',
+        targets: '#screen-lowerthirds-container',
         top: "37vw",
         height: "1.9vw",
         easing: 'easeInOutQuad',
