@@ -113,21 +113,20 @@ function astonHeadOn() {
     }
 
     // Lower the sub headline out of the viewable area so that we can animate it on later.
-    $("#screen-lowerthirds-heads-subhead").css({top: "6.5vw"});
+    $("#screen-lowerthirds-heads-subhead").css({"transform": "translateY(2vw)"});
 
-    // Raise the entire Aston container upwards into vision, and grow it simultaneously.
+    // Grow the entire headline Aston container from 0 height to its full size.
     anime({
-        targets: '#screen-lowerthirds-container',
-        top: "32.1vw",
-        height: "6.8vw",
+        targets: '#screen-lowerthirds-heads-container',
+        height: "4.9vw",
         easing: 'easeInOutQuad',
         duration: 400
     });
 
-    // Animate the sub headline upwards as the Aston container comes into view.
+    // Animate the sub headline upwards as the headline Aston container comes into view.
     anime({
         targets: '#screen-lowerthirds-heads-subhead',
-        top: "4.33vw",
+        translateY: "0vw",
         easing: 'easeInOutQuad',
         delay: 200,
         duration: 400
@@ -144,12 +143,11 @@ function astonHeadOff() {
         return;
     }
 
-    // Animate the entire headline Aston container downwards, and shrink it.
-    // Once we're done, only the top bit showing the logo will in vision.
+    // Animate the headline Aston container to 0 height. The branding bar
+    // above will automatically move downwards as the headline container shrinks.
     anime({
-        targets: '#screen-lowerthirds-container',
-        top: "37vw",
-        height: "1.9vw",
+        targets: '#screen-lowerthirds-heads-container',
+        height: "0",
         easing: 'easeInOutQuad',
         duration: 400
     });

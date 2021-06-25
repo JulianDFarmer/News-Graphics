@@ -44,105 +44,61 @@ body {
 #screen {
     width: 75vw;
     height: calc(75vw / 16 * 9);
-    background-color: #04F404;
-//    background-color: white;
-    font-family: "Reith Serif", serif;
-//    background-image: url("https://i1.wp.com/cleanfeed.thetvroom.com/media/2019/07/bbc-news-reith-coverage-002-20.png?ssl=1");
-    background-size: contain;
-    background-repeat:no-repeat;
-    position: relative;
-    overflow: hidden;
     float: left;
+    display: grid;
+    background-color: #04F404;
+    overflow: hidden;
 }
 #screen-live-container {
-    position: absolute;
-    top: 1.65vw;
-    margin-left: 14%;
     font-family: "Reith Sans", serif;
     font-size: 1.2vw;
     color: white;
-    float: left;
+    position: fixed;
+    top: 2.25vw;
+    margin-left: 10.5vw;
     display: flex;
     overflow: hidden;
 }
 #screen-live-bug {
-    background-color:#be002c;
-    padding: 0.1vw 0.55vw;
     position: relative;
     top: 1.9vw;
+    padding: 0.1vw 0.55vw;
+    background-color:#be002c;
 }
 #screen-live-locator {
-    padding: 0 0.4vw;
-    background-color: rgba(0,0,0,0.65);
     position: relative;
     top: 1.9vw;
+    padding: 0 0.4vw;
+    background-color: rgba(0,0,0,0.65);
 }
 #screen-live-locatortail {
-    background-color: #be002c;
-    width: 100%;
     height: 0.2vw;
-    margin-top: -0.2vw;
-    top: 3.73vw;
-    position: absolute;
-}
-#screen-lowerthirds-ticker-container {
     width: 100%;
-    height: 3.35vw;
-    background-color: rgba(255,255,255,0.9);
     position: absolute;
-    top: 38.83vw;
-}
-#screen-lowerthirds-ticker-text {
-    font-family: "Reith Sans", sans-serif;
-    font-weight: 500;
-    font-size: 1.3vw;
-    letter-spacing: 0.001em;
-    color: #666666;
-    margin-left: 14%;
-    float: left;
-    width: 65%;
-    position:relative;
-}
-#canvas-ticker-bullet {
-    width: 0.5vw;
-    height: 0.5vw;
+    top: 3.73vw;
+    margin-top: -0.2vw;
     background-color: #be002c;
-    margin: 0.65vw 0.5vw;
-    float: left;
-}
-#screen-lowerthirds-ticker-time {
-    background-color: #be002c;
-    font-family: "Reith Sans", sans-serif;
-    font-weight: 500;
-    font-size: 1.3vw;
-    text-align: center;
-    color: #FFFFFF;
-    margin-right: 14%;
-    width: 6%;
-    height: 2vw;
-    float: right;
-    position: relative;
 }
 
 #screen-lowerthirds-container {
-    width: 100%;
-    height: 1.9vw;
-    position: absolute;
-    top: 37vw;
+    align-self: end;
+}
+#screen-lowerthirds-branding {
+    font-family: "Reith Sans", sans-serif;
+    color: white;
+    height: 1.85vw;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 14%;
     background-color: rgba(0,0,0,0.65);
-    overflow:hidden;
 }
 #screen-lowerthirds-branding-network {
-    height: 1.9vw;
-    background-color: #be002c;
-    margin-left: 14%;
-    padding: 0 0.5vw;
-    float: left;
-    font-family: "Reith Sans", sans-serif;
     font-size: 1.35vw;
-    color: white;
+    padding: 0 0.5vw;
+    background-color: #be002c;
 }
 #screen-lowerthirds-branding-bbclogo {
+    float: left;
     height: 100%;
     width: 4.8vw;
     margin-top: 0.25vw;
@@ -150,38 +106,64 @@ body {
     background-image:url("bbc-logo-white.png");
     background-size: contain;
     background-repeat:no-repeat;
-    float: left;
 }
 #screen-lowerthirds-branding-programme {
-    height: 1.8vw;
-    background-color: #be002c;
-    margin-right: 14%;
-    padding: 0.05vw 0.5vw;
-    float: right;
-    font-family: "Reith Sans", sans-serif;
     font-size: 1.2vw;
+    height: 1.75vw;
+    padding: 0.05vw 0.5vw;
+    background-color: #be002c;
+}
+#screen-lowerthirds-heads-container {
     color: white;
+    height: 0;
+    padding: 0 14%;
+    background-color: rgba(0,0,0,0.65);
+    overflow: hidden;
 }
 #screen-lowerthirds-heads-head {
-    margin-left: 14%;
-    font-family: "Reith Serif", sans-serif;
-    font-size: 2.1vw;
-    color: white;
-    top: 1.7vw;
-    position: absolute;
+    font-family: "Reith Serif", serif;
+    font-size: 2.08vw;
+    letter-spacing: 0.03em;
+    margin-top: -0.2vw;
     padding: 0 0.5vw;
-    letter-spacing: 0.023em;
 }
 #screen-lowerthirds-heads-subhead {
-    margin-left: 14%;
     font-family: "Reith Sans", sans-serif;
     font-size: 1.5vw;
-    color: white;
-    top: 4.33vw;
-    position: absolute;
-    padding: 0 0.5vw;
     letter-spacing: 0.035em;
+    margin-top: -0.2vw;
+    padding: 0 0.5vw 0.35vw 0.5vw;
 }
+#screen-lowerthirds-ticker-container {
+    font-family: "Reith Sans", sans-serif;
+    font-size: 1.3vw;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    height: 3.35vw;
+    padding: 0 14%;
+    background-color: rgba(255,255,255,0.9);
+}
+#screen-lowerthirds-ticker-text {
+    color: #666666;
+    letter-spacing: 0.001em;
+    max-width: 48vw;
+}
+#canvas-ticker-bullet {
+    float: left;
+    height: 0.5vw;
+    width: 0.5vw;
+    margin: 0.65vw 0.5vw;
+    background-color: #be002c;
+}
+#screen-lowerthirds-ticker-time {
+    color: white;
+    text-align: center;
+    height: 2vw;
+    width: 4.5vw;
+    background-color: #be002c;
+}
+
 
 .button {
     padding: 5px;
