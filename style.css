@@ -1,0 +1,176 @@
+@font-face {
+    font-family: "Reith Sans";
+    font-weight: normal;
+    src: url("fonts/BBCReithSans_W_Rg.woff2") format("woff2"),
+    url("fonts/BBCReithSans_W_Rg.woff") format("woff");
+}
+@font-face {
+    font-family: "Reith Sans";
+    font-weight: 500;
+    src: url("fonts/BBCReithSans_W_Md.woff2") format("woff2"),
+    url("fonts/BBCReithSans_W_Md.woff") format("woff");
+}
+@font-face {
+    font-family: "Reith Sans";
+    font-weight: bold;
+    src: url("fonts/BBCReithSans_W_Bd.woff2") format("woff2"),
+    url("fonts/BBCReithSans_W_Bd.woff") format("woff");
+}
+@font-face {
+    font-family: "Reith Serif";
+    font-weight: normal;
+    src: url("fonts/BBCReithSerif_W_Rg.woff2") format("woff2"),
+    url("fonts/BBCReithSerif_W_Rg.woff") format("woff");
+}
+@font-face {
+    font-family: "Reith Serif";
+    font-weight: 500;
+    src: url("fonts/BBCReithSerif_W_Md.woff2") format("woff2"),
+    url("fonts/BBCReithSerif_W_Md.woff") format("woff");
+}
+@font-face {
+    font-family: "Reith Serif";
+    font-weight: bold;
+    src: url("fonts/BBCReithSerif_W_Bd.woff2") format("woff2"),
+    url("fonts/BBCReithSerif_W_Bd.woff") format("woff");
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    background-color: black;
+}
+
+#canvas {
+    width: 75vw;
+    height: calc(75vw / 16 * 9);
+    background-color: #04F404;
+//    background-color: white;
+    font-family: "Reith Serif", serif;
+//    background-image: url("https://i1.wp.com/cleanfeed.thetvroom.com/media/2019/07/bbc-news-reith-coverage-002-20.png?ssl=1");
+    background-size: contain;
+    background-repeat:no-repeat;
+    position: relative;
+}
+#canvas-locator {
+    position: absolute;
+    top: 4%;
+    margin-left: 14%;
+    font-family: "Reith Sans", serif;
+    font-size: 1.2vw;
+    color: white;
+}
+#canvas-locator-live {
+    background-color:#be002c;
+    padding: 0.1vw 0.55vw;
+    float: left;
+}
+#canvas-locator-location {
+    float: right;
+    padding: 0 0.4vw;
+    background-color: rgba(0,0,0,0.65);
+}
+#canvas-locator-tail {
+    background-color: #be002c;
+    width: 100%;
+    height: 0.2vw;
+    margin-top: -0.2vw;
+    bottom: 0;
+    position: absolute;
+}
+#canvas-ticker {
+    width: 100%;
+    height: 8%;
+    background-color: rgba(255,255,255,0.9);
+    position: absolute;
+    top: 92%;
+}
+#canvas-ticker-text {
+    font-family: "Reith Sans", sans-serif;
+    font-weight: 500;
+    font-size: 1.3vw;
+    letter-spacing: 0.001em;
+    color: #666666;
+    margin-left: 14%;
+    float: left;
+    width: 65%;
+    position:relative;
+}
+#canvas-ticker-bullet {
+    width: 0.5vw;
+    height: 0.5vw;
+    background-color: #be002c;
+    margin: 0.65vw 0.5vw;
+    float: left;
+}
+#canvas-ticker-time {
+    background-color: #be002c;
+    font-family: "Reith Sans", sans-serif;
+    font-weight: 500;
+    font-size: 1.3vw;
+    text-align: center;
+    color: #FFFFFF;
+    margin-right: 14%;
+    width: 6%;
+    height: 60%;
+    float: right;
+    position: relative;
+}
+
+#canvas-aston {
+    width: 100%;
+    height: 16%;
+    position: absolute;
+    top: 76%;
+    background-color: rgba(0,0,0,0.65);
+}
+#canvas-aston-brand {
+    height: 28%;
+    background-color: #be002c;
+    margin-left: 14%;
+    padding: 0 0.5vw;
+    float: left;
+    font-family: "Reith Sans", sans-serif;
+    font-size: 1.35vw;
+    color: white;
+}
+#canvas-aston-brand-logo {
+    height: 100%;
+    width: 4.8vw;
+    margin-top: 0.25vw;
+    margin-right: 0.4vw;
+    background-image:url("bbc-logo-white.png");
+    background-size: contain;
+    background-repeat:no-repeat;
+    float: left;
+}
+#canvas-aston-prog {
+    height: 25%;
+    background-color: #be002c;
+    margin-right: 14%;
+    padding: 0.05vw 0.5vw;
+    float: right;
+    font-family: "Reith Sans", sans-serif;
+    font-size: 1.2vw;
+    color: white;
+}
+#canvas-aston-head {
+    margin-left: 14%;
+    font-family: "Reith Serif", sans-serif;
+    font-size: 2.1vw;
+    color: white;
+    top: 25%;
+    position: absolute;
+    padding: 0 0.5vw;
+    letter-spacing: 0.023em;
+}
+#canvas-aston-subhead {
+    margin-left: 14%;
+    font-family: "Reith Sans", sans-serif;
+    font-size: 1.5vw;
+    color: white;
+    top: 64%;
+    position: absolute;
+    padding: 0 0.5vw;
+    letter-spacing: 0.035em;
+}
