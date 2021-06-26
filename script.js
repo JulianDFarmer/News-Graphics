@@ -3,6 +3,9 @@ var isLiveBugOn = false;
 var isLiveLocatorOn = false;
 var isHeadAstonOn = false;
 var isNameAstonOn = false;
+var isClockOn = true;
+var isProgNameOn = false;
+var restoreProgName = false;
 var headlineNext = false;
 var isTickerOn = true;
 var whichSubHead = 1;
@@ -472,5 +475,133 @@ function updateTime() {
     var timeSplit = time.split(":");
     time = timeSplit[0] + ":" + timeSplit[1];
 
-    $("#screen-lowerthirds-ticker-time")[0].innerText = time;
+    $("#screen-lowerthirds-ticker-clock")[0].innerText = time;
+}
+
+/**
+ * Animates the programme name box out of vision
+ */
+function progNameOff() {
+    // If the programme name box is already out of vision, do nothing.
+    if(!isProgNameOn) {
+        return;
+    }
+    // Animate the box upwards out of vision
+    anime({
+        targets: "#screen-lowerthirds-branding-programme",
+        translateY: "-2vw",
+        easing: 'easeInOutQuad',
+        duration: 400
+    });
+    isProgNameOn = false;
+}
+
+/**
+ * Animates the programme name box into vision
+ */
+function progNameOn() {
+    // If the programme name box is already in vision, do nothing.
+    if(isProgNameOn) {
+        return;
+    }
+    // Move the box below the bar so that it can be animated upwards into vision
+    $("#screen-lowerthirds-branding-programme").css({"transform": "translateY(2vw)"});
+    // Override display:none which is set by default when the page is loaded
+    $("#screen-lowerthirds-branding-programme").show();
+    // Animate it upwards into vision
+    anime({
+        targets: "#screen-lowerthirds-branding-programme",
+        translateY: "0",
+        easing: 'easeInOutQuad',
+        duration: 400
+    });
+    isProgNameOn = true;
+}
+
+/**
+ * Animates the clock out of vision
+ */
+function clockOff() {
+    // If the clock is already out of vision, do nothing
+    if(!isClockOn) {
+        return;
+    }
+    // Animate the box upwards out of vision
+    anime({
+        targets: "#screen-lowerthirds-ticker-clock",
+        translateY: "-2vw",
+        easing: 'easeInOutQuad',
+        duration: 400
+    });
+    isClockOn = false;
+}
+
+/**
+ * Animates the clock into vision
+ */
+function clockOn() {
+    // If the clock is already in vision, do nothing
+    if(isClockOn) {
+        return;
+    }
+    // Move the box below the bar so that it can be animated upwards into vision
+    $("#screen-lowerthirds-ticker-clock").css({"transform": "translateY(2vw)"});
+    // Animate it upwards into vision
+    anime({
+        targets: "#screen-lowerthirds-ticker-clock",
+        translateY: "0",
+        easing: 'easeInOutQuad',
+        duration: 400
+    });
+    isClockOn = true;
+}
+
+/**
+ * Animates the ticker (and clock/prog name/branding bar) into vision
+ */
+function tickerOn() {
+    anime({
+        targets: "#screen-lowerthirds-ticker-bar",
+        translateY: "0",
+        easing: 'easeInOutQuad',
+        duration: 600,
+    });
+    anime({
+        targets: "#screen-lowerthirds-branding",
+        translateY: "0",
+        easing: 'easeInOutQuad',
+        duration: 600,
+    });
+    setTimeout(clockOn,500);
+    if(restoreProgName) {
+        setTimeout(progNameOn,800);
+        restoreProgName = false;
+    }
+}
+
+/**
+ * Animates the ticker (and clock/prog name/branding bar) out of vision
+ */
+function tickerOff() {
+    if(isProgNameOn) {
+        restoreProgName = true;
+    }
+    astonHeadOff();
+    astonNameOff();
+    progNameOff();
+    setTimeout(clockOff,300);
+    anime({
+        targets: "#screen-lowerthirds-ticker-bar",
+        translateY: "3.35vw",
+        easing: 'easeInOutQuad',
+        duration: 600,
+        delay: 600
+    });
+    anime({
+        targets: "#screen-lowerthirds-branding",
+        translateY: "5.2vw",
+        easing: 'easeInOutQuad',
+        duration: 600,
+        delay: 600
+    });
 }

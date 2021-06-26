@@ -111,11 +111,12 @@ body {
 #screen-lowerthirds-branding {
     font-family: "Reith Sans", sans-serif;
     color: white;
-    height: 1.85vw;
+    height: 1.86vw;
     display: flex;
     justify-content: space-between;
     padding: 0 14%;
     background-color: rgba(0,0,0,0.7);
+    overflow: hidden;
 }
 #screen-lowerthirds-branding-network {
     font-size: 1.35vw;
@@ -134,9 +135,10 @@ body {
 }
 #screen-lowerthirds-branding-programme {
     font-size: 1.2vw;
-    height: 1.75vw;
+    height: 1.76vw;
     padding: 0.05vw 0.5vw;
     background-color: #be002c;
+    display: none;
 }
 #screen-lowerthirds-heads-container {
     color: white;
@@ -203,7 +205,11 @@ body {
     margin: 0.65vw 0.5vw;
     background-color: #be002c;
 }
-#screen-lowerthirds-ticker-time {
+#screen-lowerthirds-ticker-clock-container {
+    height: 2vw;
+    overflow: hidden;
+}
+#screen-lowerthirds-ticker-clock {
     color: white;
     text-align: center;
     height: 2vw;
