@@ -49,9 +49,9 @@ body {
     background-color: #04F404;
     overflow: hidden;
 
-//    background-image: url("https://i2.wp.com/cleanfeed.thetvroom.com/media/2019/07/bbc-news-reith-coverage-002-84.png?fit=1220%2C504");
-//    background-size: contain;
-//    background-repeat: no-repeat;
+    background-image: url("https://ichef.bbci.co.uk/images/ic/1920x1080/p06vdvf1.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 #screen-live-container {
     font-family: "Reith Sans", serif;
@@ -72,8 +72,8 @@ body {
 #screen-live-locator {
     position: relative;
     top: 1.9vw;
-    padding: 0 0.4vw;
-    background-color: rgba(0,0,0,0.65);
+    padding: 0.04vw 0.4vw;
+    background-color: rgba(0,0,0,0.7);
 }
 #screen-live-locatortail {
     height: 0.2vw;
@@ -91,7 +91,7 @@ body {
     color: white;
     height: 0;
     padding: 0 14%;
-    background-color: rgba(0,0,0,0.65);
+    background-color: rgba(0,0,0,0.7);
     overflow: hidden;
 }
 #screen-lowerthirds-nameaston-name {
@@ -115,7 +115,7 @@ body {
     display: flex;
     justify-content: space-between;
     padding: 0 14%;
-    background-color: rgba(0,0,0,0.65);
+    background-color: rgba(0,0,0,0.7);
 }
 #screen-lowerthirds-branding-network {
     font-size: 1.35vw;
@@ -142,8 +142,9 @@ body {
     color: white;
     height: 0;
     padding: 0 14%;
-    background-color: rgba(0,0,0,0.65);
+    background-color: rgba(0,0,0,0.7);
     overflow: hidden;
+    position: relative;
 }
 #screen-lowerthirds-heads-head {
     font-family: "Reith Serif", serif;
@@ -152,14 +153,28 @@ body {
     margin-top: -0.2vw;
     padding: 0 0.5vw;
 }
-#screen-lowerthirds-heads-subhead {
+#screen-lowerthirds-heads-subhead-container {
+    height: 2.2vw;
+    overflow: hidden;
+    position: relative;
+}
+#screen-lowerthirds-heads-subhead-1 {
     font-family: "Reith Sans", sans-serif;
     font-size: 1.5vw;
     letter-spacing: 0.035em;
     margin-top: -0.2vw;
     padding: 0 0.5vw 0.35vw 0.5vw;
+    position: absolute;
 }
-#screen-lowerthirds-ticker-container {
+#screen-lowerthirds-heads-subhead-2 {
+    font-family: "Reith Sans", sans-serif;
+    font-size: 1.5vw;
+    letter-spacing: 0.035em;
+    margin-top: -0.2vw;
+    padding: 0 0.5vw 0.35vw 0.5vw;
+    position: absolute;
+}
+#screen-lowerthirds-ticker-bar {
     font-family: "Reith Sans", sans-serif;
     font-size: 1.3vw;
     font-weight: 500;
@@ -167,14 +182,21 @@ body {
     justify-content: space-between;
     height: 3.35vw;
     padding: 0 14%;
-    background-color: rgba(255,255,255,0.9);
+    background-color: rgba(255,255,255,0.95);
+}
+#screen-lowerthirds-ticker-bar-text-container {
+    height: 1.8vw;
+    overflow: hidden;
 }
 #screen-lowerthirds-ticker-text {
-    color: #666666;
+    color: #555555;
     letter-spacing: 0.001em;
-    max-width: 48vw;
+    width: 48vw;
 }
-#canvas-ticker-bullet {
+.ticker-text-red {
+    color: #be002c !important;
+}
+#screen-lowerthirds-ticker-bullet {
     float: left;
     height: 0.5vw;
     width: 0.5vw;

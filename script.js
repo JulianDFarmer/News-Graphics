@@ -4,6 +4,26 @@ var isLiveLocatorOn = false;
 var isHeadAstonOn = false;
 var isNameAstonOn = false;
 var headlineNext = false;
+var isTickerOn = true;
+var whichSubHead = 1;
+var subHeadTimeout;
+
+// Arrays to store headlines / ticker stories...
+var subHeadlines = ["Chauvin offered condolences to Floyd family in brief statement","Chauvin was convicted of murdering Mr Floyd","Hailed as longest sentence of an American policeman","Chauvin found guilty in April of murdering George Floyd","Floyd's brother: 'Chauvin had no regard for human life'","Chauvin's mother: 'Lengthy sentence will not serve him well'"];
+var tickerStories = [["HEADLINES","Germany knife attack: Three dead and several more injured in Wurzburg","Matt Hancock has admitted he breached social distancing guidance","Boris Johnson 'considers the matter closed' after Matt Hancock apology","Labour Party chair Anneliese Dodds calls for Health Sec to be sacked"],
+                     ["BREAKING","Derek Chauvin sentenced to 22yrs and 6 months for George Floyd murder"]];
+var tickerTracker = [0,0];
+var subHeadTracker = 1;
+
+/**
+ * Called when the page loads
+ */
+function initPage() {
+    updateTime();
+    rotateTicker();
+    startTicker();
+    setInterval(updateTime,1000);
+}
 
 /**
  * Animates the live bug and locator onto the screen
@@ -120,8 +140,16 @@ function astonHeadOn() {
         return;
     }
 
-    // Lower the sub headline out of the viewable area so that we can animate it on later.
-    $("#screen-lowerthirds-heads-subhead").css({"transform": "translateY(2vw)"});
+    // Lower the sub headlines out of the viewable area so that we can animate it on later.
+    // There are two, as they are both visible as they transition on/off, so we alternate
+    // between them when we swap subheads.
+    $("#screen-lowerthirds-heads-subhead-1").css({"transform": "translateY(2vw)"});
+    $("#screen-lowerthirds-heads-subhead-2").css({"transform": "translateY(2vw)"});
+
+    $("#screen-lowerthirds-heads-subhead-1")[0].innerText = subHeadlines[0];
+
+    // Set the whichSubHead global var to 1 to show that the first element is on screen
+    whichSubHead = 1;
 
     // Grow the entire headline Aston container from 0 height to its full size.
     anime({
@@ -133,13 +161,16 @@ function astonHeadOn() {
 
     // Animate the sub headline upwards as the headline Aston container comes into view.
     anime({
-        targets: '#screen-lowerthirds-heads-subhead',
+        targets: '#screen-lowerthirds-heads-subhead-1',
         translateY: "0vw",
         easing: 'easeInOutQuad',
         delay: 200,
         duration: 400
     });
     isHeadAstonOn = true;
+
+    // Call startSubHeads to regularly rotate through sub headlines.
+    startSubHeads();
 }
 
 /**
@@ -160,6 +191,9 @@ function astonHeadOff() {
         duration: 400
     });
     isHeadAstonOn = false;
+
+    // Cancel any setTimeout for rotating the sub head
+    clearTimeout(subHeadTimeout);
 }
 
 /**
@@ -240,4 +274,203 @@ function astonNameOff() {
         duration: 400
     });
     isNameAstonOn = false;
+}
+
+/**
+ * Rotates the ticker to the next story
+ */
+function rotateTicker() {
+    // Increment the story counter...
+    tickerTracker[1]++;
+    // If we've gone past the last story in the current category...
+    if(tickerTracker[1]>=tickerStories[tickerTracker[0]].length) {
+        // Reset the story counter to 0...
+        tickerTracker[1] = 0;
+        // Increment the category counter...
+        tickerTracker[0]++;
+        // ... and check if we've gone past the last category.
+        if (tickerTracker[0] >= tickerStories.length) {
+            // If so, reset the category counter to 0 to loop back to the first one.
+            tickerTracker[0] = 0;
+        }
+    }
+
+    // Get the next story to put on the ticker.
+    let story = tickerStories[tickerTracker[0]][tickerTracker[1]];
+    // Get the category of the next story.
+    let category = tickerStories[tickerTracker[0]][0];
+
+    // Animate the current story off the top of the ticker.
+    anime({
+        targets: '#screen-lowerthirds-ticker-text, #screen-lowerthirds-ticker-bullet',
+        translateY: "-1.7vw",
+        easing: 'easeInOutQuad',
+        duration: 400
+    });
+
+    // Wait for the animation to complete....
+    setTimeout(function() {
+        // Move the ticker back below the visible area so it can be animated back in
+        $("#screen-lowerthirds-ticker-text").css({"transform": "translateY(1.7vw)"});
+        $("#screen-lowerthirds-ticker-bullet").css({"transform": "translateY(1.7vw)"});
+
+        // Replace the story text...
+        $("#screen-lowerthirds-ticker-text")[0].innerText = story;
+
+        // If the category is BREAKING, add the class to make the text red.
+        if(category == "BREAKING") {
+            $("#screen-lowerthirds-ticker-text").addClass("ticker-text-red");
+        }
+        else {
+            $("#screen-lowerthirds-ticker-text").removeClass("ticker-text-red");
+        }
+
+        // Animate the ticker back into view from below.
+        anime({
+            targets: '#screen-lowerthirds-ticker-text, #screen-lowerthirds-ticker-bullet',
+            translateY: "0",
+            easing: 'easeInOutQuad',
+            duration: 400
+        });
+
+        // Wait for the animation to finish...
+        setTimeout(function() {
+            // If the ticker is displaying the category text BREAKING, make the text flash...
+            if(story == "BREAKING") {
+                flashTickerText();
+            }
+            // Otherwise, if the ticker is displaying a story in the BREAKING category,
+            // make the bullet point flash.
+            else if(category == "BREAKING") {
+                flashTickerBullet();
+            }
+        },400);
+    },400);
+}
+
+/**
+ * Rotates the ticker by calling rotateTicker, as long as the ticker is on screen.
+ */
+function startTicker() {
+    let interval = 6;
+
+    // If we're displaying a category name rather than an actual story,
+    // it should only be in vision for 4 seconds rather then the default 6
+    if(tickerStories[tickerTracker[0]][0]==tickerStories[tickerTracker[0]][tickerTracker[1]]) {
+        interval = 4;
+    }
+
+    setTimeout(function() {
+        rotateTicker();
+        if(isTickerOn) {
+            startTicker();
+        }
+    },interval*1000);
+
+}
+
+/**
+ * Rotates between sub headlines while the headline Aston is in vision
+ */
+function rotateSubHead() {
+    // If the headline Aston isn't in vision, do nothing.
+    if(!isHeadAstonOn) {
+        return;
+    }
+    // If there is only one sub headline, do nothing.
+    if(subHeadlines.length == 1) {
+        return;
+    }
+    // Work out which element is in vision, and which is next
+    var current;
+    var next;
+    if(whichSubHead == 1) {
+        current = "#screen-lowerthirds-heads-subhead-1";
+        next = "#screen-lowerthirds-heads-subhead-2";
+        whichSubHead = 2;
+    }
+    else {
+        current = "#screen-lowerthirds-heads-subhead-2";
+        next = "#screen-lowerthirds-heads-subhead-1";
+        whichSubHead = 1;
+    }
+
+    // Increment the subhead counter
+    subHeadTracker++;
+    // If we've gone past the last one, loop back to the first
+    if(subHeadTracker>=subHeadlines.length) {
+        subHeadTracker = 0;
+    }
+
+    $(next).css({"transform": "translateY(2vw)"});
+    // Swap the text on the next element to be rotated in...
+    $(next)[0].innerText = subHeadlines[subHeadTracker];
+
+    // Animate the old one off...
+    anime({
+        targets: current,
+        translateY: "-2vw",
+        easing: 'easeInOutQuad',
+        duration: 500
+    });
+    // And animate the new one on...
+    anime({
+        targets: next,
+        translateY: "0vw",
+        easing: 'easeInOutQuad',
+        duration: 500
+    });
+}
+
+/**
+ * Rotates the sub headline by calling rotateSubHead, as long as the headline Aston is in vision
+ */
+function startSubHeads() {
+    subHeadTimeout = setTimeout(function() {
+        rotateSubHead();
+        if(isHeadAstonOn) {
+            startSubHeads();
+        }
+    },6000);
+
+}
+
+/**
+ * Makes the ticker text flash three times
+ */
+function flashTickerText (){
+    anime({
+        targets: '#screen-lowerthirds-ticker-text',
+        opacity: "0",
+        loop: 6,
+        direction: "alternate",
+        easing: 'easeInOutQuad',
+        duration: 200
+    });
+}
+
+/**
+ * Makes the ticker bullet point flash three times
+ */
+function flashTickerBullet() {
+    anime({
+        targets: '#screen-lowerthirds-ticker-bullet',
+        opacity: "0",
+        loop: 6,
+        direction: "alternate",
+        easing: 'easeInOutQuad',
+        duration: 200
+    });
+}
+
+/**
+ * Updates the clock on the ticker
+ */
+function updateTime() {
+    var date = new Date;
+    var time = date.toLocaleTimeString('en-GB');
+    var timeSplit = time.split(":");
+    time = timeSplit[0] + ":" + timeSplit[1];
+
+    $("#screen-lowerthirds-ticker-time")[0].innerText = time;
 }
