@@ -2,6 +2,8 @@
 var isLiveBugOn = false;
 var isLiveLocatorOn = false;
 var isHeadAstonOn = false;
+var isNameAstonOn = false;
+var headlineNext = false;
 
 /**
  * Animates the live bug and locator onto the screen
@@ -111,6 +113,12 @@ function astonHeadOn() {
     if(isHeadAstonOn) {
         return;
     }
+    // If a name Aston is in vision, set headlineNext to true so that
+    // the headline Aston will be set in vision once the name Aston is done
+    if(isNameAstonOn) {
+        headlineNext = true;
+        return;
+    }
 
     // Lower the sub headline out of the viewable area so that we can animate it on later.
     $("#screen-lowerthirds-heads-subhead").css({"transform": "translateY(2vw)"});
@@ -152,4 +160,84 @@ function astonHeadOff() {
         duration: 400
     });
     isHeadAstonOn = false;
+}
+
+/**
+ * Animates the name Aston into vision
+ * @param duration How long the Aston should stay in vision (in seconds) - default 5
+*/
+function astonNameOn(duration=5) {
+    // If the name Aston is already in vision, do nothing.
+    if(isNameAstonOn) {
+        return;
+    }
+    // If the headline Aston is in vision, turn it off, and call this function again
+    // after the animation is done. Set headlineNext to true so that the headline Aston
+    // comes back after the name Aston has animated off.
+    else if(isHeadAstonOn) {
+        astonHeadOff();
+        setTimeout(function() {
+            headlineNext = true;
+            astonNameOn(duration);
+        },500);
+        return;
+    }
+
+    // Translate the name and title down so that they can be animated up later.
+    $("#screen-lowerthirds-nameaston-name").css({"transform": "translateY(2vw)"});
+    $("#screen-lowerthirds-nameaston-title").css({"transform": "translateY(2vw)"});
+
+    // Grow the entire name Aston container from 0 height to its full size.
+    anime({
+        targets: '#screen-lowerthirds-nameaston-container',
+        height: "4.9vw",
+        easing: 'easeInOutQuad',
+        duration: 400
+    });
+    // Animate the name and title upwards as the container comes into view.
+    anime({
+        targets: '#screen-lowerthirds-nameaston-name',
+        translateY: "0vw",
+        easing: 'easeInOutQuad',
+        delay: 100,
+        duration: 400
+    });
+    anime({
+        targets: '#screen-lowerthirds-nameaston-title',
+        translateY: "0vw",
+        easing: 'easeInOutQuad',
+        delay: 200,
+        duration: 400
+    });
+
+    isNameAstonOn = true;
+
+    setTimeout(function() {
+        astonNameOff();
+        if(headlineNext) {
+            setTimeout(function() {
+                astonHeadOn();
+                headlineNext = false;
+            },500);
+        }
+    },duration*1000);
+}
+
+/**
+ * Animates the name Aston out of vision.
+ */
+function astonNameOff() {
+    // If the name Aston isn't in vision, do nothing.
+    if(!isNameAstonOn) {
+        return;
+    }
+
+    // Animate the name Aston container to 0 height.
+    anime({
+        targets: '#screen-lowerthirds-nameaston-container',
+        height: "0",
+        easing: 'easeInOutQuad',
+        duration: 400
+    });
+    isNameAstonOn = false;
 }
