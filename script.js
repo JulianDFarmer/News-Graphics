@@ -61,16 +61,18 @@ function liveOn(locator=false) {
         return;
     }
 
+    // Remove the hidden class, which is set by default when the user loads the page
+    $("#screen-live-container").removeClass("hidden");
+
     // Reset the bug/locator back to below the viewable area
     // (it'll be above if it's previously been animated off)
-    $("#screen-live-bug").css({top: "1.9vw"});
-    $("#screen-live-locator").css({top: "1.9vw"});
-    $("#screen-live-locatortail").css({top: "3.73vw"});
+    $("#screen-live-bug").css({"transform": "translateY(100%)"});
+    $("#screen-live-locator").css({"transform": "translateY(100%)"});
 
     // Animate the live bug up into the viewable area...
     anime({
         targets: '#screen-live-bug',
-        top: "0",
+        translateY: "0",
         easing: 'easeInOutQuad',
         duration: 300
     });
@@ -78,13 +80,7 @@ function liveOn(locator=false) {
     if(locator) {
         anime({
             targets: '#screen-live-locator',
-            top: "0",
-            easing: 'easeInOutQuad',
-            duration: 300
-        });
-        anime({
-            targets: '#screen-live-locatortail',
-            top: "1.83vw",
+            translateY: "0",
             easing: 'easeInOutQuad',
             duration: 300
         });
@@ -105,7 +101,7 @@ function liveOff() {
     // Animate the live bug up out of the viewable area...
     anime({
         targets: '#screen-live-bug',
-        top: "-1.9vw",
+        translateY: "-100%",
         easing: 'easeInOutQuad',
         duration: 300
     });
@@ -113,13 +109,7 @@ function liveOff() {
     if(isLiveLocatorOn) {
         anime({
             targets: '#screen-live-locator',
-            top: "-1.9vw",
-            easing: 'easeInOutQuad',
-            duration: 300
-        });
-        anime({
-            targets: '#screen-live-locatortail',
-            top: "-0.07vw",
+            translateY: "-100%",
             easing: 'easeInOutQuad',
             duration: 300
         });
@@ -143,11 +133,13 @@ function astonHeadOn() {
         return;
     }
 
+    let scrollHeight = $("#screen-lowerthirds-heads-container").prop("scrollHeight") + $("#screen-lowerthirds-heads-subhead-1").prop("scrollHeight");
+
     // Lower the sub headlines out of the viewable area so that we can animate it on later.
     // There are two, as they are both visible as they transition on/off, so we alternate
     // between them when we swap subheads.
-    $("#screen-lowerthirds-heads-subhead-1").css({"transform": "translateY(2vw)"});
-    $("#screen-lowerthirds-heads-subhead-2").css({"transform": "translateY(2vw)"});
+    $("#screen-lowerthirds-heads-subhead-1").css({"transform": "translateY(100%)"});
+    $("#screen-lowerthirds-heads-subhead-2").css({"transform": "translateY(100%)"});
 
     $("#screen-lowerthirds-heads-subhead-1")[0].innerText = subHeadlines[0];
 
@@ -157,7 +149,7 @@ function astonHeadOn() {
     // Grow the entire headline Aston container from 0 height to its full size.
     anime({
         targets: '#screen-lowerthirds-heads-container',
-        height: "4.9vw",
+        height: scrollHeight,
         easing: 'easeInOutQuad',
         duration: 400
     });
@@ -165,7 +157,7 @@ function astonHeadOn() {
     // Animate the sub headline upwards as the headline Aston container comes into view.
     anime({
         targets: '#screen-lowerthirds-heads-subhead-1',
-        translateY: "0vw",
+        translateY: "0",
         easing: 'easeInOutQuad',
         delay: 200,
         duration: 400
@@ -220,28 +212,31 @@ function astonNameOn(duration=5) {
         return;
     }
 
+    // Get the height of the container so we know how far to open it in the animation
+    let scrollHeight = $("#screen-lowerthirds-nameaston-container").prop("scrollHeight");
+
     // Translate the name and title down so that they can be animated up later.
-    $("#screen-lowerthirds-nameaston-name").css({"transform": "translateY(2vw)"});
-    $("#screen-lowerthirds-nameaston-title").css({"transform": "translateY(2vw)"});
+    $("#screen-lowerthirds-nameaston-name").css({"transform": "translateY(100%)"});
+    $("#screen-lowerthirds-nameaston-title").css({"transform": "translateY(100%)"});
 
     // Grow the entire name Aston container from 0 height to its full size.
     anime({
         targets: '#screen-lowerthirds-nameaston-container',
-        height: "4.9vw",
+        height: scrollHeight,
         easing: 'easeInOutQuad',
         duration: 400
     });
     // Animate the name and title upwards as the container comes into view.
     anime({
         targets: '#screen-lowerthirds-nameaston-name',
-        translateY: "0vw",
+        translateY: "0",
         easing: 'easeInOutQuad',
         delay: 100,
         duration: 400
     });
     anime({
         targets: '#screen-lowerthirds-nameaston-title',
-        translateY: "0vw",
+        translateY: "0",
         easing: 'easeInOutQuad',
         delay: 200,
         duration: 400
@@ -305,8 +300,14 @@ function rotateTicker() {
 
     // Animate the current story off the top of the ticker.
     anime({
-        targets: '#screen-lowerthirds-ticker-text, #screen-lowerthirds-ticker-bullet',
-        translateY: "-1.7vw",
+        targets: '#screen-lowerthirds-ticker-text',
+        translateY: "-100%",
+        easing: 'easeInOutQuad',
+        duration: 400
+    });
+    anime({
+        targets: '#screen-lowerthirds-ticker-bullet',
+        translateY: "-350%",
         easing: 'easeInOutQuad',
         duration: 400
     });
@@ -314,8 +315,8 @@ function rotateTicker() {
     // Wait for the animation to complete....
     setTimeout(function() {
         // Move the ticker back below the visible area so it can be animated back in
-        $("#screen-lowerthirds-ticker-text").css({"transform": "translateY(1.7vw)"});
-        $("#screen-lowerthirds-ticker-bullet").css({"transform": "translateY(1.7vw)"});
+        $("#screen-lowerthirds-ticker-text").css({"transform": "translateY(100%)"});
+        $("#screen-lowerthirds-ticker-bullet").css({"transform": "translateY(350%)"});
 
         // Replace the story text...
         $("#screen-lowerthirds-ticker-text")[0].innerText = story;
@@ -405,21 +406,22 @@ function rotateSubHead() {
         subHeadTracker = 0;
     }
 
-    $(next).css({"transform": "translateY(2vw)"});
+    // Move the next element under the visible area so it can be animated in...
+    $(next).css({"transform": "translateY(110%)"});
     // Swap the text on the next element to be rotated in...
     $(next)[0].innerText = subHeadlines[subHeadTracker];
 
     // Animate the old one off...
     anime({
         targets: current,
-        translateY: "-2vw",
+        translateY: "-100%",
         easing: 'easeInOutQuad',
         duration: 500
     });
     // And animate the new one on...
     anime({
         targets: next,
-        translateY: "0vw",
+        translateY: "0",
         easing: 'easeInOutQuad',
         duration: 500
     });
@@ -429,6 +431,8 @@ function rotateSubHead() {
  * Rotates the sub headline by calling rotateSubHead, as long as the headline Aston is in vision
  */
 function startSubHeads() {
+    // Clear any existing subhead Timeout events.
+    clearTimeout(subHeadTimeout);
     subHeadTimeout = setTimeout(function() {
         rotateSubHead();
         if(isHeadAstonOn) {
@@ -489,7 +493,7 @@ function progNameOff() {
     // Animate the box upwards out of vision
     anime({
         targets: "#screen-lowerthirds-branding-programme",
-        translateY: "-2vw",
+        translateY: "-100%",
         easing: 'easeInOutQuad',
         duration: 400
     });
@@ -505,9 +509,9 @@ function progNameOn() {
         return;
     }
     // Move the box below the bar so that it can be animated upwards into vision
-    $("#screen-lowerthirds-branding-programme").css({"transform": "translateY(2vw)"});
-    // Override display:none which is set by default when the page is loaded
-    $("#screen-lowerthirds-branding-programme").show();
+    $("#screen-lowerthirds-branding-programme").css({"transform": "translateY(100%)"});
+    // Remove the hidden class, which is set by default when the page is loaded
+    $("#screen-lowerthirds-branding-programme").removeClass("hidden");
     // Animate it upwards into vision
     anime({
         targets: "#screen-lowerthirds-branding-programme",
@@ -529,7 +533,7 @@ function clockOff() {
     // Animate the box upwards out of vision
     anime({
         targets: "#screen-lowerthirds-ticker-clock",
-        translateY: "-2vw",
+        translateY: "-100%",
         easing: 'easeInOutQuad',
         duration: 400
     });
@@ -545,7 +549,7 @@ function clockOn() {
         return;
     }
     // Move the box below the bar so that it can be animated upwards into vision
-    $("#screen-lowerthirds-ticker-clock").css({"transform": "translateY(2vw)"});
+    $("#screen-lowerthirds-ticker-clock").css({"transform": "translateY(100%)"});
     // Animate it upwards into vision
     anime({
         targets: "#screen-lowerthirds-ticker-clock",
@@ -592,14 +596,14 @@ function tickerOff() {
     setTimeout(clockOff,300);
     anime({
         targets: "#screen-lowerthirds-ticker-bar",
-        translateY: "3.35vw",
+        translateY: "100%",
         easing: 'easeInOutQuad',
         duration: 600,
         delay: 600
     });
     anime({
         targets: "#screen-lowerthirds-branding",
-        translateY: "5.2vw",
+        translateY: "300%",
         easing: 'easeInOutQuad',
         duration: 600,
         delay: 600
